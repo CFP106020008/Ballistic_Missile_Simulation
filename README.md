@@ -6,9 +6,7 @@ This code considers (1) gravity, (2) air drag and (3) rocket equation. The rotat
 
 ### Gravity
 This is simple, we simply have:
-$$
-\vec{a}_g = -\frac{GM_E}{r^3}\vec{r}
-$$
+$$\vec{a}_g = -\frac{GM_E}{r^3}\vec{r}$$
 
 ### Air drag
 This is much more tricky. In the acent phase, air drag is relatively relevant. But when the war head is returning to the Earth, it will hit the dense atmosphere with hypersonic velocity. However, hypersonic air drag is very complicated. In this work I simply use:
