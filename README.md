@@ -24,7 +24,7 @@ $\vec{n}$ is the pointing of the rocket, which is controllable. I used the follo
 
 ### [Rotational fictitious force](https://en.wikipedia.org/wiki/Coriolis_force)
 There are 3 fictitious force in a rotating frame.
-* Euler force: $-m\frac{d\vec{\omega}}{dt}\times \vec{r}$, which is 0 since the angular velocity of the Earth is constant.
+* Euler force: $-m\dot{\vec{\omega}}\times \vec{r}$, which is 0 since the angular velocity of the Earth is constant.
 * Coriolis force: $-2m(\vec{\omega}\times \vec{v})$, need to be considered.
 * Centrifugal force: $-m \vec{\omega}\times(\vec{\omega}\times \vec{r})$, which is effectively $\omega^2\vec{r}$.
 
