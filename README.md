@@ -2,7 +2,7 @@
 This code can do some native numerical analysis on ballistic trajectory
 
 ## Basic physics
-This code considers (1) gravity, (2) air drag and (3) rocket equation. The rotation of the earth is omitted becase only in 3D can we fully explore the effects of earth rotation. And since I'm too lazy to change the whole code from 2D to 3D, I decide to ignore it. 
+This code considers (1) gravity, (2) air drag (3) rocket equation and (4) rotational Fictitious force. 
 
 ### Gravity
 This is simple, we have:
@@ -22,9 +22,14 @@ $\vec{n}$ is the pointing of the rocket, which is controllable. I used the follo
 * if $h < 10$ km, where the rocket is still in the dense air, then $\vec{n} = \mathrm{rotate}(\hat{r}, \theta)$, where $\theta$ is basically the $\mathrm{launch~angle} - 90^\circ$.
 * if $h > 10$ km, $\vec{n} = \hat{v}$ so that the acceleration is maximized.
 
+### Rotational Fictitious force
+There are 3 fictitious force in a rotating frame.
+* Euler force: $-m\frac{d\vec{\omega}}{dt}\times \vec{r}$, which is 0 since the angular velocity of the Earth is constant.
+* Coriolis force: $-2m(\vec{\omega}\times \vec{v})$, need to be considered.
+* Centrifugal force: $-m \vec{\omega}\times(\vec{\omega}\times \vec{r})$, which is effectively $\omega^2\vec{r}$.
 
 ### Add them all together
 Combining them, we can derive the total acceleration:
-$$\vec{a} = \vec{a}_g+\vec{a}_A+\vec{a}_R$$
+$$\vec{a} = \vec{a}_g + \vec{a}_A + \vec{a}_R + \vec{a}_\mathrm{cen} + \vec{a}_\mathrm{col}$$
 
 and use ```scipy.integrate.solve_ivp``` to do the integration.
