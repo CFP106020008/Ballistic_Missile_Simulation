@@ -10,7 +10,7 @@ $$\vec{a}_g = -\frac{GM_E}{r^3}\vec{r}$$
 
 ### Air drag
 This is much more tricky. In the acent phase, air drag is relatively irrelevant. But when the war head is returning to the Earth, it will hit the dense atmosphere with hypersonic velocity. However, hypersonic/supersonic drag is very complicated. In this work I simply use:
-$$\vec{a}_A = \frac{1}{2} \rho C_D A v^2$$
+$$\vec{a}_A = -\frac{1}{2} \rho C_D A v \vec{v}$$
 Note that here we are assuming a constant geometry. that is $\vec{v}\parallel \vec{a}_A$. $\rho$ is the air density, here we simply apply [the model for troposphere](https://en.wikipedia.org/wiki/Density_of_air).
 $$\rho = \frac{p_0 M}{RT_0}\left(1-\frac{Lh}{T_0}\right)^{\frac{gM}{RL}-1}, \quad h = r - R_E$$
 
