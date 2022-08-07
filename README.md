@@ -2,7 +2,7 @@
 This code can do some native numerical analysis on ballistic trajectory
 
 ## Basic physics
-This code considers (1) gravity, (2) air drag (3) rocket equation and (4) rotational Fictitious force. 
+This code considers (1) gravity, (2) air drag (3) rocket equation and (4) rotational fictitious force. 
 
 ### Gravity
 This is simple, we have:
