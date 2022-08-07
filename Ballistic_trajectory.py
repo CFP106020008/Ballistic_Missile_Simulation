@@ -22,22 +22,22 @@ g   = 9.81       # m/s^2
 
 # Missile
 m_0 = 6200 # kg, launch mass
-m_f = 1100 # kg, mass of war head + empty rocket 
+m_f = 1600 # kg, mass of war head + empty rocket 
 m_wh = 800 # kg, mass of war head
 isp = 237 # s
 v_e = isp*g # m/s
-TTW = 2 # thrust to weight
+TTW = 1.5 # thrust to weight
 F = m_0*g*TTW # thrust, in N
-C_D = 1e-3 # drag coefficient, dimensionless
+C_D = 5e-4 # drag coefficient, dimensionless
 A = np.pi*0.5**2 # cross section, m^2
 EA = 80 # angle of elevation, in deg
 
 # Atmospheric constants
-T0 = 273.15 + 15 # K
-p0 = 1013e2 # Pa
-R  = 8.314 # J/K/mol
-L = 0.0065 # K/m
-MW = 0.029 # molecular weight of the air, kg/mol
+T0 = 273.15 + 15 # K, surface temperature
+p0 = 1013e2 # Pa, surface pressure
+R  = 8.314 # J/K/mol, ideal gas constant
+L = 0.0065 # K/m, temperature lapse rate
+MW = 0.029 # kg/mol, molecular weight of the air
 
 #%%
 
@@ -46,9 +46,9 @@ tmax = 3.6e3 # Simulation time in second, set to 60 min for maximum
 
 # Visualization properties
 Box_size = 1.2e7 # Size of the plot
-frames = int(3600) # Output frames
+frames = int(1800) # Output frames
 Tracing = True # Viewing the sail with tracing mode.
-SAVE_VIDEO = True # Whether you want to save the video
+SAVE_VIDEO = False  # Whether you want to save the video
 
 #%%
 def initial_condition():
@@ -156,7 +156,7 @@ gs = GridSpec(2, 4, figure=fig)
 
 # Picture
 ax = fig.add_subplot(gs[:, :2])
-ax.set_facecolor(COLOR)
+ax.set_facecolor('#202020')
 ax.xaxis.set_visible(False)
 ax.yaxis.set_visible(False)
 ax.spines['bottom'].set_color(COLOR)
@@ -214,7 +214,7 @@ ax2.yaxis.label.set_color(LineColor)
 
 Range = R_E*np.arccos(np.dot([x[0], y[0]], [x[-1],y[-1]])/R_E**2)/1000 # in km
 v_f = np.sqrt(vx[-2]**2+vy[-2]**2)/340 # in Mach
-fig.suptitle('Launch angle {:.0f} degree, Range: {:.0f} km, impact velocity M{:.1f}'.format(EA, Range, v_f), color='w')
+fig.suptitle('Launch angle {:.0f} degree, Range: {:.0f} km, impact velocity M{:.1f}'.format(EA, Range, v_f), color='silver')
 
 plt.tight_layout()
 #%%
@@ -240,9 +240,6 @@ def update(i):
 if SAVE_VIDEO:
     for i in range(frames):
         update(i)
-    os.system('cd images')
-    os.system("ffmpeg -framerate 30 -pattern_type glob -i '*.png' \ -c:v libx264 -pix_fmt yuv420p movie.mp4")
-    os.system('cd ..')
 else:
     ani = FuncAnimation(fig=fig, 
                         func=update,
