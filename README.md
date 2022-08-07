@@ -22,7 +22,7 @@ $\vec{n}$ is the pointing of the rocket, which is controllable. I used the follo
 * if $h < 10$ km, where the rocket is still in the dense air, then $\vec{n} = \mathrm{rotate}(\hat{r}, \theta)$, where $\theta$ is basically the $\mathrm{launch~angle} - 90^\circ$.
 * if $h > 10$ km, $\vec{n} = \hat{v}$ so that the acceleration is maximized.
 
-### Rotational Fictitious force
+### [Rotational fictitious force](https://en.wikipedia.org/wiki/Coriolis_force)
 There are 3 fictitious force in a rotating frame.
 * Euler force: $-m\frac{d\vec{\omega}}{dt}\times \vec{r}$, which is 0 since the angular velocity of the Earth is constant.
 * Coriolis force: $-2m(\vec{\omega}\times \vec{v})$, need to be considered.
