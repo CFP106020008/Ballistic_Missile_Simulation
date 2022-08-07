@@ -19,6 +19,7 @@ G = 6.67e-11     # Gravitational Constant
 M_E = 5.972e24   # kg
 R_E = 6371000    # m
 g   = 9.81       # m/s^2
+omega = 7.2921159e-5 # rad/s
 
 # Missile
 m_0 = 6200 # kg, launch mass
@@ -30,7 +31,7 @@ TTW = 1.5 # thrust to weight
 F = m_0*g*TTW # thrust, in N
 C_D = 5e-4 # drag coefficient, dimensionless
 A = np.pi*0.5**2 # cross section, m^2
-EA = 80 # angle of elevation, in deg
+EA = 90 # angle of elevation, in deg
 
 # Atmospheric constants
 T0 = 273.15 + 15 # K, surface temperature
@@ -124,8 +125,15 @@ def function(t, y):
         a_A = -0.5*air_density(r-R_E)*v**2*C_D*(0.5*A)/m_wh*v_vec
     else: # acent
         a_A = -0.5*air_density(r-R_E)*v**2*C_D*A/y[4]*v_vec
+    
+    # Centrifugal force
+    a_cen = omega**2*r_vec
+    
+    # Coriolis force
+    a_cor = 2*omega*np.array([v_vec[1], -v_vec[0]])
+    
     # Total acceleration
-    a = a_rocket + a_g + a_A
+    a = a_rocket + a_g + a_A + a_cen + a_cor
     dvxdt = a[0]
     dvydt = a[1]
     return np.array([dxdt, dydt, dvxdt, dvydt, dmdt])
