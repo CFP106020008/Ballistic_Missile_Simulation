@@ -7,6 +7,7 @@ Created on Sun Aug  7 01:58:45 2022
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from scipy.integrate import solve_ivp
 import matplotlib.cm as cm
 from matplotlib.animation import FuncAnimation
@@ -25,13 +26,13 @@ omega = 7.2921159e-5 # rad/s
 m_0 = 6200 # kg, launch mass
 m_f = 1600 # kg, mass of war head + empty rocket 
 m_wh = 800 # kg, mass of war head
-isp = 237 # s
+isp = 237 # s, SRB general number
 v_e = isp*g # m/s
 TTW = 1.5 # thrust to weight
 F = m_0*g*TTW # thrust, in N
-C_D = 5e-4 # drag coefficient, dimensionless
+C_D = 2e-1 # drag coefficient, dimensionless
 A = np.pi*0.5**2 # cross section, m^2
-EA = 90 # angle of elevation, in deg
+EA = 75 # angle of elevation, in deg
 
 # Atmospheric constants
 T0 = 273.15 + 15 # K, surface temperature
@@ -47,9 +48,9 @@ tmax = 3.6e3 # Simulation time in second, set to 60 min for maximum
 
 # Visualization properties
 Box_size = 1.2e7 # Size of the plot
-frames = int(1800) # Output frames
+frames = int(2100) # Output frames
 Tracing = True # Viewing the sail with tracing mode.
-SAVE_VIDEO = False  # Whether you want to save the video
+SAVE_VIDEO = True  # Whether you want to save the video
 
 #%%
 def initial_condition():
@@ -92,7 +93,10 @@ def Decide_Pointing(t, x, y, vx, vy):
     if np.linalg.norm(r) > R_E + 1e4: # above 10 km, align with velocity
         phat = vhat
     else:
-        phat = rotate(rhat, EA-90)
+        if np.dot(r, v) > 0:
+            phat = rotate(rhat, EA-90)
+        else: 
+            phat = vhat
     return phat
 
 #%% Here are the function for ivp solver
@@ -122,9 +126,9 @@ def function(t, y):
     a_g = -G*M_E/r**3*r_vec
     # Air drag
     if separation: # decent
-        a_A = -0.5*air_density(r-R_E)*v**2*C_D*(0.5*A)/m_wh*v_vec
+        a_A = -0.5*air_density(r-R_E)*v*C_D*(0.5*A)/m_wh*v_vec
     else: # acent
-        a_A = -0.5*air_density(r-R_E)*v**2*C_D*A/y[4]*v_vec
+        a_A = -0.5*air_density(r-R_E)*v*C_D*A/y[4]*v_vec
     
     # Centrifugal force
     a_cen = omega**2*r_vec
@@ -194,7 +198,7 @@ ax1.set_xlim([0,t[-1]])
 ax1.set_ylim([0,np.max(np.sqrt(vx**2+vy**2))*1.2])
 ax1.tick_params(labelcolor=LineColor, labelsize='medium', width=3, colors=LineColor)
 ax1.ticklabel_format(axis='y', style='sci', useMathText=True, scilimits=(4,5))
-ax1.set_xlabel('Time (yr)')
+ax1.set_xlabel('Time (s)')
 ax1.set_ylabel('Velocity (m/s)')
 ax1.xaxis.label.set_color(LineColor)
 ax1.yaxis.label.set_color(LineColor)
@@ -212,7 +216,7 @@ ax2.spines['left'].set_color(LineColor)
 ax2.set_xlim([0, t[-1]])
 ax2.set_ylim([0, np.max(h)*1.2])
 ax2.tick_params(labelcolor=LineColor, labelsize='medium', width=3, colors=LineColor)
-ax2.ticklabel_format(style='sci', useMathText=True)
+ax2.ticklabel_format(style='sci', useMathText=True, scilimits=(4,5))
 ax2.set_xlabel('Time (s)')
 ax2.set_ylabel('Height (m)')
 ax2.xaxis.label.set_color(LineColor)
