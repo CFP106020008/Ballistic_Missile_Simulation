@@ -35,6 +35,7 @@ $$\vec{a} = \vec{a}_g + \vec{a}_A + \vec{a}_R + \vec{a}_\mathrm{cen} + \vec{a}_\
 and use ```scipy.integrate.solve_ivp``` to do the integration.
 
 ## Result
-https://user-images.githubusercontent.com/48315222/183301800-695d8a2c-e132-475c-801a-7a729161287d.mp4
+https://user-images.githubusercontent.com/48315222/183479789-446ba6ba-58b0-4a22-8dcc-d449f36f8ce7.mp4
+
 
 
