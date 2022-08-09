@@ -29,10 +29,7 @@ There are 3 fictitious force in a rotating frame.
 * Centrifugal force: $-m \vec{\omega}\times(\vec{\omega}\times \vec{r})$, which is effectively $\omega^2\vec{r}$.
 
 ### Add them all together
-Combining them, we can derive the total acceleration:
-$$\vec{a} = \vec{a}_g + \vec{a}_A + \vec{a}_R + \vec{a}_\mathrm{cen} + \vec{a}_\mathrm{col}$$
-
-and use ```scipy.integrate.solve_ivp``` to do the integration.
+Combining them all, we obtain the total acceleration. Then we can use ```scipy.integrate.solve_ivp``` to do the integration.
 
 ## Result
 https://user-images.githubusercontent.com/48315222/183479789-446ba6ba-58b0-4a22-8dcc-d449f36f8ce7.mp4
